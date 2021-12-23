@@ -18,16 +18,16 @@ class EmotionalState {
   // ================= Constructors =================
 
   EmotionalState(
-      {required this.feeling,
-      required this.upTo,
-      required this.sleep,
-      required this.medication,
-      required this.anxiety,
-      required this.stress,
-      required this.coping,
-      required this.productivity,
-      required this.suicide,
-      required this.harm});
+       this.feeling,
+       this.upTo,
+       this.sleep,
+       this.medication,
+       this.anxiety,
+       this.stress,
+       this.coping,
+       this.productivity,
+       this.suicide,
+       this.harm);
 
   EmotionalState.fromMap(Map<String, dynamic> map)
       : _id = map[columnID],

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mood_tracker_v2/pages/form_page.dart';
 import 'package:mood_tracker_v2/pages/home_page.dart';
+
+import 'app/labels.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,6 +15,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        homeRoute: (context) => const HomePage(),
+        formRoute: (context) => const FormPage(),
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

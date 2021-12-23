@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mood_tracker_v2/widgets/home_screen.dart';
+import 'package:mood_tracker_v2/widgets/screens/home_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,6 +21,15 @@ class _HomePageState extends State<HomePage> {
       title: const Text("Moode"),
     ),
     body: const HomeScreen(),
+    floatingActionButton: FloatingActionButton(
+    elevation: 4,
+    onPressed: () {
+      Navigator.pushNamed(context, '/form');
+//            showDialog(context: context, builder: (context) => ExpenseForm());
+    },
+    tooltip: "Add new Expense",
+    child: const Icon(Icons.edit),
+  ),
   );
 
 }
