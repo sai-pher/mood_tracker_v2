@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mood_tracker_v2/pages/form_complete_page.dart';
 import 'package:mood_tracker_v2/pages/form_page.dart';
 import 'package:mood_tracker_v2/pages/home_page.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         homeRoute: (context) => const HomePage(),
         formRoute: (context) => const FormPage(),
+        formCompleteRoute: (context) => const FormCompletePage(),
       },
       theme: ThemeData(
         brightness: Brightness.dark,

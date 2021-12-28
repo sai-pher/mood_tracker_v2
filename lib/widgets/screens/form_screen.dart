@@ -300,6 +300,61 @@ class _FormScreenState extends State {
           )
       ),
       Step(
+          title: sectionTitle("Thoughts", const Icon(Icons.self_improvement, color: Colors.white,)),
+          isActive: currentStep == 5,
+          state: _stepState((_suicide != '' && _harm != ''), 5),
+          content: Column(
+            children: <Widget>[
+              QuestionFormField(
+                options: suicide,
+                question: "Suicidal Ideations?",
+                selected: _suicide,
+                onUpdate: (target) {
+                  setState(() {
+                    _suicide = target;
+                    questionsAnswered += 1;
+                    answered[8] = true;
+                  });
+                },
+                onSaved: (target){
+                  setState(() {
+                    _suicide = target!;
+                  });
+                },
+                validator: (target){
+                  if(target == ''){
+                    return 'Please select an answer';
+                  }
+                  return null;
+                },
+              ),
+              QuestionFormField(
+                options: harms,
+                question: "Self harm Ideations?",
+                selected: _harm,
+                onUpdate: (target) {
+                  setState(() {
+                    _harm = target;
+                    questionsAnswered += 1;
+                    answered[9] = true;
+                  });
+                },
+                onSaved: (target){
+                  setState(() {
+                    _harm = target!;
+                  });
+                },
+                validator: (target){
+                  if(target == ''){
+                    return 'Please select an answer';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          )
+      ),
+      Step(
         title: sectionTitle("Coping", const Icon(Icons.air, color: Colors.lightBlueAccent,)),
         isActive: currentStep == 3,
         state: _stepState((_coping != ''), 3),
@@ -364,61 +419,6 @@ class _FormScreenState extends State {
           ],
         ),
       ),
-      Step(
-          title: sectionTitle("Thoughts", const Icon(Icons.self_improvement, color: Colors.white,)),
-          isActive: currentStep == 5,
-          state: _stepState((_suicide != '' && _harm != ''), 5),
-          content: Column(
-            children: <Widget>[
-              QuestionFormField(
-                options: suicide,
-                question: "Suicidal Ideations?",
-                selected: _suicide,
-                onUpdate: (target) {
-                  setState(() {
-                    _suicide = target;
-                    questionsAnswered += 1;
-                    answered[8] = true;
-                  });
-                },
-                onSaved: (target){
-                  setState(() {
-                    _suicide = target!;
-                  });
-                },
-                validator: (target){
-                  if(target == ''){
-                    return 'Please select an answer';
-                  }
-                  return null;
-                },
-              ),
-              QuestionFormField(
-                options: harms,
-                question: "Self harm Ideations?",
-                selected: _harm,
-                onUpdate: (target) {
-                  setState(() {
-                    _harm = target;
-                    questionsAnswered += 1;
-                    answered[9] = true;
-                  });
-                },
-                onSaved: (target){
-                  setState(() {
-                    _harm = target!;
-                  });
-                },
-                validator: (target){
-                  if(target == ''){
-                    return 'Please select an answer';
-                  }
-                  return null;
-                },
-              ),
-            ],
-          )
-      ),
     ];
 
     _goTo(int newStep){
@@ -477,7 +477,7 @@ class _FormScreenState extends State {
             handler.insert(emotionalState);
           });
 
-          // Navigator.pushNamed(context, formCompleteRoute);
+          Navigator.pushNamed(context, formCompleteRoute);
         }
       }
     }
