@@ -115,11 +115,29 @@ class _FormScreenState extends State {
     return formLayout();
   }
 
+  sectionTitle(String section, Icon icon) {
+    return Row(
+      children: [
+        Text(section),
+        icon
+      ],
+    );
+  }
+
+  _stepState(bool state, int step) {
+    if (state) {
+      return StepState.complete;
+    } else {
+      return StepState.editing;
+    }
+  }
+
   stepperForm(){
     List<Step> steps = [
       Step(
-          title: (_feeling != '' && _upto != '')?  const Icon(Icons.favorite, color: Colors.red,) : const Icon(Icons.favorite_border,color: Colors.red,),
+          title: sectionTitle('Grounding', const Icon(Icons.favorite, color: Colors.red,)),
           isActive: currentStep == 0,
+          state: _stepState((_feeling != '' && _upto != ''), 0),
           content: Column(
             children: <Widget>[
               QuestionFormField(
@@ -172,11 +190,11 @@ class _FormScreenState extends State {
           )
       ),
       Step(
-          title: (_sleep != '' && _medication != '')?  const Icon(Icons.favorite, color: Colors.red,) : const Icon(Icons.favorite_border,color: Colors.red,),
+          title: sectionTitle("Vitals", const Icon(Icons.healing, color: Colors.green,)),
           isActive: currentStep == 1,
+          state: _stepState((_sleep != '' && _medication != ''), 1),
           content: Column(
             children: <Widget>[
-              TextFormField(),
               QuestionFormField(
                 options: sleeps,
                 question: "How did you sleep?",
@@ -227,8 +245,9 @@ class _FormScreenState extends State {
           )
       ),
       Step(
-          title: (_anxiety != '' && _stress != '')?  const Icon(Icons.favorite, color: Colors.red,) : const Icon(Icons.favorite_border,color: Colors.red,),
+          title: sectionTitle("Stress", const Icon(Icons.bolt, color: Colors.yellow,)),
           isActive: currentStep == 2,
+          state: _stepState((_anxiety != '' && _stress != ''), 2),
           content: Column(
             children: <Widget>[
               QuestionFormField(
@@ -281,8 +300,9 @@ class _FormScreenState extends State {
           )
       ),
       Step(
-        title: (_coping != '')?  const Icon(Icons.favorite, color: Colors.red,) : const Icon(Icons.favorite_border,color: Colors.red,),
+        title: sectionTitle("Coping", const Icon(Icons.air, color: Colors.lightBlueAccent,)),
         isActive: currentStep == 3,
+        state: _stepState((_coping != ''), 3),
         content: Column(
           children: <Widget>[
             QuestionFormField(
@@ -313,8 +333,9 @@ class _FormScreenState extends State {
         ),
       ),
       Step(
-        title: (_productivity != '')?  const Icon(Icons.favorite, color: Colors.red,) : const Icon(Icons.favorite_border,color: Colors.red,),
+        title: sectionTitle("productivity", const Icon(Icons.all_inclusive, color: Colors.pink,)),
         isActive: currentStep == 4,
+        state: _stepState((_productivity != ''), 4),
         content: Column(
           children: <Widget>[
             QuestionFormField(
@@ -344,8 +365,9 @@ class _FormScreenState extends State {
         ),
       ),
       Step(
-          title: (_suicide != '' && _harm != '')?  const Icon(Icons.favorite, color: Colors.red,) : const Icon(Icons.favorite_border,color: Colors.red,),
+          title: sectionTitle("Thoughts", const Icon(Icons.self_improvement, color: Colors.white,)),
           isActive: currentStep == 5,
+          state: _stepState((_suicide != '' && _harm != ''), 5),
           content: Column(
             children: <Widget>[
               QuestionFormField(
@@ -448,11 +470,14 @@ class _FormScreenState extends State {
                 _coping,
                 _productivity,
                 _suicide,
-                _harm);
-            DBHandler.handler.insert(emotionalState);
+                _harm,
+                _now);
+
+            DBHandler handler = DBHandler();
+            handler.insert(emotionalState);
           });
 
-          Navigator.pushNamed(context, formCompleteRoute);
+          // Navigator.pushNamed(context, formCompleteRoute);
         }
       }
     }
@@ -465,9 +490,30 @@ class _FormScreenState extends State {
 
 
     return Stepper(
-      type: StepperType.horizontal,
+      type: StepperType.vertical,
       steps: steps,
       currentStep: currentStep,
+      controlsBuilder: (BuildContext context, ControlsDetails controls) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Row(
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: controls.onStepContinue,
+                child: currentStep != steps.length - 1 ? const Text('Next') : const Text('Complete'),
+              ),
+              if (currentStep != 0)
+                TextButton(
+                  onPressed: controls.onStepCancel,
+                  child: const Text(
+                    'BACK',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
       onStepContinue: next,
       onStepCancel: _cancel,
       onStepTapped: (step) => _goTo(step),

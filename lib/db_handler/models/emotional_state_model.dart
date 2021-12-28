@@ -1,19 +1,19 @@
 import 'package:mood_tracker_v2/app/labels.dart';
 
 class EmotionalState {
-  late int _id;
-  String feeling;
-  String upTo;
-  String sleep;
-  String medication;
-  String anxiety;
-  String stress;
-  String coping;
-  String productivity;
-  String suicide;
-  String harm;
+  int? _id;
+  String? feeling;
+  String? upTo;
+  String? sleep;
+  String? medication;
+  String? anxiety;
+  String? stress;
+  String? coping;
+  String? productivity;
+  String? suicide;
+  String? harm;
 
-  // DateTime _date;
+  DateTime? _date;
 
   // ================= Constructors =================
 
@@ -27,28 +27,28 @@ class EmotionalState {
        this.coping,
        this.productivity,
        this.suicide,
-       this.harm);
+       this.harm,
+      this._date);
 
-  EmotionalState.fromMap(Map<String, dynamic> map)
-      : _id = map[columnID],
-        feeling = map[columnFeeling],
-        upTo = map[columnUpTo],
-        sleep = map[columnSleep],
-        medication = map[columnMedication],
-        anxiety = map[columnAnxiety],
-        stress = map[columnStress],
-        coping = map[columnCoping],
-        productivity = map[columnProductivity],
-        suicide = map[columnSuicide],
-        harm = map[columnHarm];
-
-  // dateMilli = map[columnDate];
+  EmotionalState.fromMap(Map<String, dynamic> map) {
+    _id = map[columnID];
+    feeling = map[columnFeeling];
+    upTo = map[columnUpTo];
+    sleep = map[columnSleep];
+    medication = map[columnMedication];
+    anxiety = map[columnAnxiety];
+    stress = map[columnStress];
+    coping = map[columnCoping];
+    productivity = map[columnProductivity];
+    suicide = map[columnSuicide];
+    harm = map[columnHarm];
+    dateMilli = map[columnDate];
+  }
 
   // ================= Helper methods =================
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      columnID: _id,
       columnFeeling: feeling,
       columnUpTo: upTo,
       columnSleep: sleep,
@@ -59,8 +59,12 @@ class EmotionalState {
       columnProductivity: productivity,
       columnSuicide: suicide,
       columnHarm: harm,
-      // columnDate: dateMilli
+      columnDate: dateMilli
     };
+
+    if (_id != null) {
+      map[columnID] = _id;
+    }
 
 
     return map;
@@ -68,19 +72,19 @@ class EmotionalState {
 
 // ================= Getters and setters =================
 
-// // ignore: unnecessary_getters_setters
-// DateTime get date => _date;
-//
-// int get dateMilli => _date.millisecondsSinceEpoch;
-//
-// // ignore: unnecessary_getters_setters
-// set date(DateTime value) {
-//   _date = value;
-// }
-//
-// /// Sets `_date` value to DateTime object from [milliseconds] since epoch.
-// set dateMilli(int milliseconds) {
-//   _date = DateTime.fromMillisecondsSinceEpoch(milliseconds);
-// }
+// ignore: unnecessary_getters_setters
+DateTime get date => _date!;
+
+int get dateMilli => _date!.millisecondsSinceEpoch;
+
+// ignore: unnecessary_getters_setters
+set date(DateTime value) {
+  _date = value;
+}
+
+/// Sets `_date` value to DateTime object from [milliseconds] since epoch.
+set dateMilli(int milliseconds) {
+  _date = DateTime.fromMillisecondsSinceEpoch(milliseconds);
+}
 
 }

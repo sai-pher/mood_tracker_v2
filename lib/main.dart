@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
         formRoute: (context) => const FormPage(),
       },
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+        primarySwatch: Colors.cyan,
       ),
       debugShowCheckedModeBanner: false,
       home: const HomePage(),

@@ -24,30 +24,39 @@ class QuestionFormField extends FormField<String> {
 
       answers() {
         return options.map((option) => TextButton(
-            onPressed: () {
-              state.didChange(option);
-              onUpdate(option);
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(selected != option ? Colors.transparent : Colors.cyan),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(36.0),
+                side: const BorderSide(color: Colors.cyan)
+            ))
+          ),
+          child: Text(option, style: const TextStyle(color: Colors.white),),
+          onPressed: () {
+            state.didChange(option);
+            onUpdate(option);
             },
-            child: Text(option)
-
         )).toList();
       }
 
-      return InputDecorator(
-        decoration: InputDecoration(
-            errorText: state.hasError ? state.errorText : null,
-            labelText: question,
-            labelStyle: const TextStyle(
-                fontSize: 24,
-                color: Colors.cyan
-            ),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))
-        ),
-        child: Wrap(
-          direction: Axis.horizontal,
-          spacing: 8.0,
-          runSpacing: 8.0,
-          children: answers(),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: InputDecorator(
+          decoration: InputDecoration(
+              errorText: state.hasError ? state.errorText : null,
+              labelText: question,
+              labelStyle: const TextStyle(
+                  fontSize: 24,
+                  color: Colors.cyan
+              ),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))
+          ),
+          child: Wrap(
+            direction: Axis.horizontal,
+            spacing: 8.0,
+            runSpacing: 8.0,
+            children: answers(),
+          ),
         ),
       );
   }

@@ -18,23 +18,23 @@ class DBHandler {
   static const int _version = 1;
 
   // ================= Singleton instance of database handler =================
-  DBHandler._privateConstructor();
+  DBHandler._privateConstructor() {
+    // _database = _initDatabase();
+  }
 
   /// A static object that ensure a single connection to the SQLite database.
   static final DBHandler handler = DBHandler._privateConstructor();
 
   // Force single connection to database
-  static late Database _database;
+  static Database? _database;
 
   Future<Database> get database async {
-    if (_database == null) {
-      _database = await _initDatabase();
-    } else {
-      return _database;
-    }
+    _database ??= await _initDatabase();
+    return _database!;
 
-    return _database;
   }
+
+  factory DBHandler() => handler;
 
   /// Method to open connection to database.
   _initDatabase() async {
@@ -103,6 +103,7 @@ class DBHandler {
   Future<int> insert(EmotionalState emotionalState) async {
     Database db = await database;
     int id = await db.insert(tableEmotionalState, emotionalState.toMap());
+    print("$id inserted successfully!");
     return id;
   }
 
