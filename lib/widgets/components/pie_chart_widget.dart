@@ -22,12 +22,19 @@ class _PieChartWidgetState extends State<PieChartWidget> {
     return Container(
       height: 300,
       padding: const EdgeInsets.all(0.0),
-      child: const Card(
+      child: Card(
         child: Padding(
-          padding: EdgeInsets.all(0.0),
-          child: Text("yoinks"),
+          padding: const EdgeInsets.all(0.0),
+          child: pieChart(),
         ),
       ),
+    );
+  }
+
+  pieChartBuilder(data) {
+    return charts.PieChart<Object>(
+      data,
+      animate: true,
     );
   }
 
@@ -40,10 +47,10 @@ class _PieChartWidgetState extends State<PieChartWidget> {
         Widget child;
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
-            List<GroupCount> groupCountList = snapshot.data;
+            final List<GroupCount> groupCountList = snapshot.data;
 
-            var series = [
-              charts.Series(
+            List<charts.Series<GroupCount, String>> series = [
+              charts.Series<GroupCount, String>(
                   labelAccessorFn: (GroupCount group, _) => '${group.groupName}\n${group.groupCount}',
                   id: '${widget.grouping} Chart',
                   data: groupCountList,
@@ -51,7 +58,7 @@ class _PieChartWidgetState extends State<PieChartWidget> {
                   measureFn: (GroupCount group, _) => group.groupCount),
             ];
 
-            var chart = charts.PieChart(
+            charts.PieChart chart = charts.PieChart<Object>(
               series,
               animate: true,
               defaultRenderer: charts.ArcRendererConfig(
