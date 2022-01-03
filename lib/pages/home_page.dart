@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:mood_tracker_v2/widgets/components/drawer_widget.dart';
+import 'package:mood_tracker_v2/widgets/components/nav_bar_widget.dart';
 import 'package:mood_tracker_v2/widgets/screens/home_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +21,9 @@ class _HomePageState extends State<HomePage> {
     appBar: AppBar(
       title: const Text("Moode"),
     ),
+    drawer: const DrawerWidget(),
     body: const HomeScreen(),
+    bottomNavigationBar: const NavBar(),
     floatingActionButton: FloatingActionButton(
     elevation: 4,
     onPressed: () {
@@ -30,6 +33,8 @@ class _HomePageState extends State<HomePage> {
     tooltip: "Add new Expense",
     child: const Icon(Icons.edit),
   ),
+    floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
   );
 
 }
